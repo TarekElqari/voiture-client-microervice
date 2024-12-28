@@ -1,0 +1,69 @@
+<div class="p-6 bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 min-h-screen">
+  <h2 class="text-3xl font-bold mb-6 text-center">Cars</h2>
+
+  <!-- Search Bar -->
+  <div class="mb-6 flex justify-center items-center">
+    <input 
+      type="text" 
+      [(ngModel)]="searchId" 
+      placeholder="Search by Car ID" 
+      class="border-2 border-indigo-400 focus:ring-4 focus:ring-indigo-300 px-6 py-3 rounded-full w-full sm:w-1/2 lg:w-1/3 shadow-lg text-gray-800 placeholder-gray-500"
+    />
+    <button 
+      class="ml-4 bg-indigo-500 text-white p-3 rounded-full hover:bg-indigo-600 transition-all duration-300"
+      (click)="filterCarsById()">
+      <i class="fas fa-search"></i> <!-- Font Awesome search icon -->
+    </button>
+  </div>
+
+  <!-- Cars Table -->
+  <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+    <table class="min-w-full bg-white text-sm text-gray-700">
+      <thead class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
+        <tr>
+          <th class="px-6 py-4 text-left font-medium">ID</th>
+          <th class="px-6 py-4 text-left font-medium">Brand</th>
+          <th class="px-6 py-4 text-left font-medium">Model</th>
+          <th class="px-6 py-4 text-left font-medium">Matricule</th>
+          <th class="px-6 py-4 text-left font-medium">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let car of filteredCars" class="hover:bg-indigo-100 transition-all duration-300">
+          <td class="px-6 py-4">{{ car.id }}</td>
+          <td class="px-6 py-4 font-semibold text-gray-800">{{ car.brand }}</td>
+          <td class="px-6 py-4">{{ car.model }}</td>
+          <td class="px-6 py-4">{{ car.matricule }}</td>
+          <td class="px-6 py-4">
+            <button (click)="viewCarDetails(car.id)" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+              <i class="fas fa-eye mr-2"></i> View Details
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Car Details Modal -->
+  <div *ngIf="selectedCar" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Car Details</h2>
+        <button (click)="closeModal()" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+      </div>
+      <div>
+        <p><strong>Brand:</strong> {{ selectedCar.brand }}</p>
+        <p><strong>Model:</strong> {{ selectedCar.model }}</p>
+        <p><strong>Matricule:</strong> {{ selectedCar.matricule }}</p>
+        <p><strong>client name:</strong> {{ selectedCar.client.name }}</p>
+      </div>
+      <div class="mt-4 flex justify-end">
+        <button (click)="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
